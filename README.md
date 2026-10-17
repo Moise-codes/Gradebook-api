@@ -1,124 +1,120 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# GradeBook API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A School Management Information System (MIS) backend built with **NestJS**, **TypeORM** and **PostgreSQL**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+It manages schools, levels, classes, students, teachers and courses, and will later support grades per student per course.
 
-## Description
+> **Status:** work in progress. This project is being built step by step as a way to learn NestJS.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tech stack
 
-## Project setup
+- [NestJS](https://nestjs.com) (TypeScript)
+- [TypeORM](https://typeorm.io)
+- PostgreSQL
+- class-validator and class-transformer (request validation)
 
-```bash
-$ npm install
-```
+## Features
 
-## Compile and run the project
+**Done**
+- [x] Project setup and PostgreSQL connection (config via `.env`)
+- [x] Global request validation (`ValidationPipe` with `whitelist`)
 
-```bash
-# development
-$ npm run start
+**In progress**
+- [ ] Levels (Senior 4, Senior 5, Senior 6): CRUD
 
-# watch mode
-$ npm run start:dev
+**Planned**
+- [ ] Schools
+- [ ] Classes (belong to a school and a level)
+- [ ] Students (belong to a class)
+- [ ] Teachers and Courses (many-to-many)
+- [ ] Users, JWT authentication and roles
+- [ ] Grades per student per course
+- [ ] Swagger documentation, pagination, tests
 
-# production mode
-$ npm run start:prod
-```
+## Data model
 
-## Run tests
+- A **School** has many **Classes**
+- A **Level** has many **Classes**
+- A **Class** has many **Students**
+- **Teachers** and **Courses**: many-to-many
+- **Students** and **Courses**: many-to-many
 
-```bash
-# unit tests
-$ npm run test
+## Prerequisites
 
-# e2e tests
-$ npm run test:e2e
+- Node.js (LTS)
+- npm
+- PostgreSQL (with a database created, for example `gradebook-db`)
 
-# test coverage
-$ npm run test:cov
-```
+## Getting started
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+1. Clone the repository and install dependencies:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+git clone git@github.com:Moise-codes/Gradebook-api.git
+cd Gradebook-api
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+2. Create a `.env` file in the project root:
 
-## Observability
+```
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=your_user
+DB_PASSWORD=your_password
+DB_NAME=gradebook-db
+```
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
-
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
-
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
-
-To add it to this project:
+3. Start the server in development mode:
 
 ```bash
-$ npm install @nestjs/observe
+npm run start:dev
 ```
 
-Then follow the [setup guide](https://docs.nestjs.com/observability/overview) - it takes a single import and an app key.
+The API runs at `http://localhost:3000`.
 
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
+## Scripts
 
-## Resources
+| Command | What it does |
+|---|---|
+| `npm run start:dev` | Run with auto-reload |
+| `npm run build` | Compile to `dist/` |
+| `npm run start:prod` | Run the compiled app |
+| `npm run test` | Run unit tests |
 
-Check out a few resources that may come in handy when working with NestJS:
+## API endpoints
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Levels (in progress)
 
-## Support
+| Method | Route | Description |
+|---|---|---|
+| POST | `/levels` | Create a level |
+| GET | `/levels` | List all levels |
+| GET | `/levels/:id` | Get one level |
+| PATCH | `/levels/:id` | Update a level |
+| DELETE | `/levels/:id` | Delete a level |
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+More endpoints will be added as each module is built.
 
-## Stay in touch
+## Project structure
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+src/
+├── main.ts            # app entry point
+├── app.module.ts      # root module
+└── levels/
+    ├── dto/           # request shapes and validation rules
+    ├── entities/      # database tables
+    ├── levels.controller.ts
+    ├── levels.service.ts
+    └── levels.module.ts
+```
 
-## License
+## Notes
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- `synchronize: true` is enabled for development only. It must be turned off in production, and migrations should be used instead.
+- Never commit your `.env` file.
+
+## Author
+
+Moise
